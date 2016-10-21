@@ -1,7 +1,6 @@
 package com.ritterdouglas.imovirtual.di;
 
-import com.ritterdouglas.olxchallenge.view.activity.MainActivity;
-import com.ritterdouglas.olxchallenge.view.activity.MapsActivity;
+import com.ritterdouglas.imovirtual.view.activity.MainActivity;
 
 import javax.inject.Singleton;
 
