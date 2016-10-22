@@ -19,11 +19,14 @@ public class CustomApplication extends Application {
 
         mNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule(NetworkingConstants.BASE_URL))
+                .netModule(new NetModule(this, NetworkingConstants.BASE_URL))
                 .build();
 
         Realm.init(this);
 
+    }
 
+    public NetComponent getNetComponent() {
+        return mNetComponent;
     }
 }
