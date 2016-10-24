@@ -4,35 +4,33 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ritterdouglas.imovirtual.networking.register_device.RegisterDeviceResponse;
-import com.ritterdouglas.imovirtual.networking.search.SearchResponse;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.HttpException;
-import retrofit2.http.Query;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SearchAPIService {
-    public static final String TAG = SearchAPIService.class.getSimpleName();
-    private SearchAPI searchAPI;
+public class RegisterDeviceAPIService {
+    public static final String TAG = RegisterDeviceAPIService.class.getSimpleName();
+    private RegisterDeviceAPI registerDeviceAPI;
     private boolean isSearching;
     private Context context;
 
-    public SearchAPIService(Retrofit retrofit, Context context) {
-        this.searchAPI = retrofit.create(SearchAPI.class);
+    public RegisterDeviceAPIService(Retrofit retrofit, Context context) {
+        this.registerDeviceAPI = retrofit.create(RegisterDeviceAPI.class);
         this.context = context;
     }
 
-    public SearchAPI getSearchAPI() {
-        return searchAPI;
+    public RegisterDeviceAPI getRegisterDeviceAPI() {
+        return registerDeviceAPI;
     }
 
-    public void setSearchAPI(SearchAPI searchAPI) {
-        this.searchAPI = searchAPI;
+    public void setRegisterDeviceAPI(RegisterDeviceAPI registerDeviceAPI) {
+        this.registerDeviceAPI = registerDeviceAPI;
     }
 
     public boolean isSearching() {
@@ -43,21 +41,14 @@ public class SearchAPIService {
         isSearching = searching;
     }
 
-    public Observable<Response<SearchResponse>> search(String location, String searchPage,
-                                                               String type, String cat, String sizeTo,
-                                                               String priceFrom, String priceTo,
-                                                               String width, String height,
-                                                               String lang, String c) {
-
-
-        return searchAPI.search(location, searchPage, type, cat, sizeTo,
-                priceFrom, priceTo, width, height, lang, c)
+    public Observable<Response<RegisterDeviceResponse>> registerDevice() {
+        return registerDeviceAPI.registerDevice()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(() -> isSearching = true)
                 .doOnTerminate(() -> isSearching = false)
                 .doOnError(this::onError)
-                .doOnNext(searchResponse -> processSearchResponse(searchResponse));
+                .doOnNext(registerResponse -> processSearchResponse(registerResponse));
     }
 
     public void onError(Throwable throwable) {
@@ -73,7 +64,7 @@ public class SearchAPIService {
     }
 
 
-    private void processSearchResponse(Response<SearchResponse> searchResponse) {
+    private void processSearchResponse(Response<RegisterDeviceResponse> searchResponse) {
         if (searchResponse.body() != null && searchResponse.body() != null) {
 
         }

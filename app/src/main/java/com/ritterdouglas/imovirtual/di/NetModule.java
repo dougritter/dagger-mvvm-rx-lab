@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ritterdouglas.imovirtual.networking.RegisterDeviceManager;
 import com.ritterdouglas.imovirtual.networking.SearchManager;
 
 import javax.inject.Singleton;
@@ -79,9 +80,15 @@ public class NetModule {
 
     @Provides
     @Singleton
+    RegisterDeviceManager provideRegisterDeviceManager(Context context, Retrofit retrofit) {
+        return RegisterDeviceManager.getInstance(context, retrofit);
+
+    }
+
+    @Provides
+    @Singleton
     SearchManager provideSearchManager(Context context, Retrofit retrofit) {
         return SearchManager.getInstance(context, retrofit);
-
     }
 
 }
